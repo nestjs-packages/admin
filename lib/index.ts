@@ -1,1 +1,4 @@
-console.log('Hello Nestjs Packages!');
+export * from './decorators';
+export * from './interfaces';
+
+export * from './admin.module';
