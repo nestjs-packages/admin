@@ -7,6 +7,7 @@ import {
 } from './common';
 import { AppModule, AuthModule, EntitiesModule } from './modules';
 
+import { AdminEnvironment } from './admin-environment';
 import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 
 @Module({})
@@ -16,23 +17,30 @@ export class AdminCoreModule {
       provide: ADMIN_MODULE_OPTIONS,
       useValue: options,
     };
+    const providers = [adminModuleOptions, AdminEnvironment];
 
     return {
+      global: true,
       module: AdminCoreModule,
       imports: [AppModule, AuthModule, EntitiesModule],
-      providers: [adminModuleOptions],
+      providers,
+      exports: providers,
     };
   }
 
   static registerAsync(options: AdminModuleAsyncOptions = {}): DynamicModule {
+    const providers = [...this.createAsyncProviders(options), AdminEnvironment];
+
     return {
+      global: true,
       module: AdminCoreModule,
       imports: (options.imports || []).concat([
         AppModule,
         AuthModule,
         EntitiesModule,
       ]),
-      providers: this.createAsyncProviders(options),
+      providers,
+      exports: providers,
     };
   }
 
