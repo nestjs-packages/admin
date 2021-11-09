@@ -1,12 +1,13 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 
-import { ADMIN_MODULE_OPTIONS } from '../admin.constants';
 import {
   AdminModuleAsyncOptions,
   AdminModuleOptions,
   AdminOptionsFactory,
-} from '../interfaces';
-import { AdminCoreController } from './admin-core.controller';
+} from './common';
+import { AuthModule, EntitiesModule } from './modules';
+
+import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 
 @Module({})
 export class AdminCoreModule {
@@ -18,17 +19,16 @@ export class AdminCoreModule {
 
     return {
       module: AdminCoreModule,
+      imports: [AuthModule, EntitiesModule],
       providers: [adminModuleOptions],
-      controllers: [AdminCoreController],
     };
   }
 
   static registerAsync(options: AdminModuleAsyncOptions = {}): DynamicModule {
     return {
       module: AdminCoreModule,
-      imports: options.imports || [],
+      imports: (options.imports || []).concat([AuthModule, EntitiesModule]),
       providers: this.createAsyncProviders(options),
-      controllers: [AdminCoreController],
     };
   }
 

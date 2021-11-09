@@ -1,7 +1,8 @@
 import { DynamicModule, Module } from '@nestjs/common';
 
-import { AdminCoreModule } from './core/admin-core.module';
-import { AdminModuleAsyncOptions, AdminModuleOptions } from './interfaces';
+import { AdminModuleAsyncOptions, AdminModuleOptions } from './common';
+
+import { AdminCoreModule } from './admin-core.module';
 
 @Module({})
 export class AdminModule {
