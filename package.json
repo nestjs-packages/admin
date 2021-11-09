@@ -1,11 +1,11 @@
 {
-  "name": "@nestjs-packages/datadog",
+  "name": "@nestjs-packages/admin",
   "version": "0.0.0",
-  "description": "Nest - modern, fast, powerful node.js web framework (@datadog)",
+  "description": "Nest - modern, fast, powerful node.js web framework (@admin)",
   "main": "dist/index.js",
   "author": "Sumin Choi <greatSumini@gmail.com> (https://sumini.dev)",
   "license": "MIT",
-  "homepage": "https://github.com/nestjs-packages/datadog#readme",
+  "homepage": "https://github.com/nestjs-packages/admin#readme",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.json",
@@ -18,11 +18,11 @@
     "release": "release-it"
   },
   "bugs": {
-    "url": "https://github.com/nestjs-packages/datadog/issues"
+    "url": "https://github.com/nestjs-packages/admin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nestjs-packages/datadog.git"
+    "url": "git+https://github.com/nestjs-packages/admin.git"
   },
   "peerDependencies": {
     "@nestjs/common": "^8.0.0",
