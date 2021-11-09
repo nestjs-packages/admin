@@ -5,7 +5,7 @@ import {
   AdminModuleOptions,
   AdminOptionsFactory,
 } from './common';
-import { AuthModule, EntitiesModule } from './modules';
+import { AppModule, AuthModule, EntitiesModule } from './modules';
 
 import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 
@@ -19,7 +19,7 @@ export class AdminCoreModule {
 
     return {
       module: AdminCoreModule,
-      imports: [AuthModule, EntitiesModule],
+      imports: [AppModule, AuthModule, EntitiesModule],
       providers: [adminModuleOptions],
     };
   }
@@ -27,7 +27,11 @@ export class AdminCoreModule {
   static registerAsync(options: AdminModuleAsyncOptions = {}): DynamicModule {
     return {
       module: AdminCoreModule,
-      imports: (options.imports || []).concat([AuthModule, EntitiesModule]),
+      imports: (options.imports || []).concat([
+        AppModule,
+        AuthModule,
+        EntitiesModule,
+      ]),
       providers: this.createAsyncProviders(options),
     };
   }
