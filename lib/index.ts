@@ -1,4 +1,3 @@
-export * from './common/decorators';
-export * from './interfaces';
+export * from './common';
 
 export * from './admin.module';
