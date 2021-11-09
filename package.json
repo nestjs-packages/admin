@@ -37,6 +37,7 @@
     "@nestjs/core": "8.2.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",
+    "@types/nunjucks": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "5.3.1",
     "@typescript-eslint/parser": "5.3.1",
     "eslint": "8.2.0",
@@ -56,5 +57,8 @@
     "*.ts": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.3"
   }
 }
