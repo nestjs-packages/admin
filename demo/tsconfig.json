@@ -20,5 +20,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*.ts", "copy-public.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
