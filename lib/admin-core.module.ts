@@ -1,8 +1,18 @@
-import { DynamicModule, Module, NestModule, Type } from '@nestjs/common';
+import {
+  DynamicModule,
+  Module,
+  NestModule,
+  Provider,
+  Type,
+} from '@nestjs/common';
 import { HttpAdapterHost, RouterModule } from '@nestjs/core';
 import { join } from 'path';
 
-import { AdminModuleOptions } from './common';
+import {
+  AdminModuleAsyncOptions,
+  AdminModuleOptions,
+  AdminOptionsFactory,
+} from './common';
 import { AppModule, AuthModule, EntitiesModule } from './modules';
 
 import { AdminEnvironment } from './admin-environment';
@@ -41,6 +51,53 @@ export class AdminCoreModule implements NestModule {
         },
       ]),
     ];
+  }
+
+  static registerAsync(options: AdminModuleAsyncOptions = {}): DynamicModule {
+    const providers = [...this.createAsyncProviders(options), AdminEnvironment];
+
+    return {
+      global: true,
+      module: AdminCoreModule,
+      imports: (options.imports || []).concat(
+        this.createModuleImports(options.path),
+      ),
+      providers,
+      exports: providers,
+    };
+  }
+
+  private static createAsyncProviders(
+    options: AdminModuleAsyncOptions,
+  ): Provider[] {
+    if (options.useExisting || options.useFactory) {
+      return [this.createAsyncOptionsProvider(options)];
+    }
+    return [
+      this.createAsyncOptionsProvider(options),
+      {
+        provide: options.useClass,
+        useClass: options.useClass,
+      },
+    ];
+  }
+
+  private static createAsyncOptionsProvider(
+    options: AdminModuleAsyncOptions,
+  ): Provider {
+    if (options.useFactory) {
+      return {
+        provide: ADMIN_MODULE_OPTIONS,
+        useFactory: options.useFactory,
+        inject: options.inject || [],
+      };
+    }
+    return {
+      provide: ADMIN_MODULE_OPTIONS,
+      useFactory: async (optionsFactory: AdminOptionsFactory) =>
+        await optionsFactory.createAdminOptions(),
+      inject: [options.useExisting || options.useClass],
+    };
   }
 
   constructor(private readonly adapterHost: HttpAdapterHost) {}
