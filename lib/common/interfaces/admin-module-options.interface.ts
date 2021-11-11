@@ -12,6 +12,14 @@ export interface AdminModuleOptions {
   ) => Promise<void | { name?: string }>;
 }
 
+export const getOptionsWithDefault = (
+  input: Partial<AdminModuleOptions>,
+): AdminModuleOptions => ({
+  path: '/admin',
+  siteName: 'Nest.js admin',
+  ...input,
+});
+
 type AdminModuleOptionsWithoutPath = Omit<AdminModuleOptions, 'path'>;
 
 export interface AdminOptionsFactory {

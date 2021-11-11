@@ -23,8 +23,8 @@ export class AdminEnvironment {
       noCache: true,
     });
 
-    this.env.addGlobal('rootPath', this.options.path ?? '/admin');
-    this.env.addGlobal('siteName', this.options.siteName ?? 'Nest.js Admin');
+    this.env.addGlobal('rootPath', this.options.path);
+    this.env.addGlobal('siteName', this.options.siteName);
   }
 
   async render(name: string, parameters: TemplateParameters) {

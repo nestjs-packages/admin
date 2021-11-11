@@ -12,6 +12,7 @@ import {
   AdminModuleAsyncOptions,
   AdminModuleOptions,
   AdminOptionsFactory,
+  getOptionsWithDefault,
 } from './common';
 import { AppModule, AuthModule, EntitiesModule } from './modules';
 
@@ -20,7 +21,8 @@ import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 
 @Module({})
 export class AdminCoreModule implements NestModule {
-  static register(options: AdminModuleOptions = {}): DynamicModule {
+  static register(_options: AdminModuleOptions = {}): DynamicModule {
+    const options = getOptionsWithDefault(_options);
     const optionsProvider = {
       provide: ADMIN_MODULE_OPTIONS,
       useValue: options,
@@ -88,19 +90,15 @@ export class AdminCoreModule implements NestModule {
     if (options.useFactory) {
       return {
         provide: ADMIN_MODULE_OPTIONS,
-        useFactory: async (...args) => ({
-          ...(await options.useFactory(...args)),
-          path: options.path,
-        }),
+        useFactory: async (...args) =>
+          getOptionsWithDefault(await options.useFactory(...args)),
         inject: options.inject || [],
       };
     }
     return {
       provide: ADMIN_MODULE_OPTIONS,
-      useFactory: async (optionsFactory: AdminOptionsFactory) => ({
-        ...(await optionsFactory.createAdminOptions()),
-        path: options.path,
-      }),
+      useFactory: async (optionsFactory: AdminOptionsFactory) =>
+        getOptionsWithDefault(await optionsFactory.createAdminOptions()),
       inject: [options.useExisting || options.useClass],
     };
   }
