@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="min-h-screen bg-gray-100 js-focus-visible" lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -17,7 +17,7 @@
       {{ siteName }}
     </title>
   </head>
-  <body class="{{ pageId }}">
+  <body class="{{ pageId }} flex flex-col min-h-screen">
     {% include 'blocks/header.njk' %}
 
     {% if backLink %}
@@ -36,7 +36,7 @@
       </div>
     {% endfor %}
 
-    {% block body %}
+    {% block main %}
 
     {% endblock %}
   </body>
