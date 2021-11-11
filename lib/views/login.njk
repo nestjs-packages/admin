@@ -6,13 +6,14 @@
       <h1 class="text-3xl font-bold mb-4">{{ siteName }}</h1>
       <form method="POST" action="{{ rootPath + '/login' }}">
         <input
-          name="username"
+          name="id"
           class="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-sm mb-4 focus:border-teal-500 focus:ring-teal-500 focus:outline-none"
           placeholder="ID"
           required
         />
         <input
           type="password"
+          name="password"
           class="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-sm mb-4 focus:border-teal-500 focus:ring-teal-500 focus:outline-none"
           placeholder="Password"
           required

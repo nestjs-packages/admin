@@ -6,10 +6,14 @@ export interface AdminModuleOptions {
   /** @default 'Nest.js admin' */
   siteName?: string;
 
+  /** pass if returned value is truthy. When NOT provided, it will initialize AdminJS without login page and authorization function. */
   authenticate?: (
     id: string,
     password: string,
   ) => Promise<void | { name?: string }>;
+  /** jwtSecretKey. strongly recommend to provide custom value
+   * @default 'nestjspackagesadmin' */
+  jwtSecretKey?: string;
 }
 
 export const getOptionsWithDefault = (
@@ -17,6 +21,7 @@ export const getOptionsWithDefault = (
 ): AdminModuleOptions => ({
   path: '/admin',
   siteName: 'Nest.js admin',
+  jwtSecretKey: 'nestjspackagesadmin',
   ...input,
 });
 

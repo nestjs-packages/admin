@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, UnauthorizedException } from '@nestjs/common';
 
 import { AdminModule } from '@nestjs-packages/admin';
 
@@ -10,6 +10,12 @@ import { AppService } from './app.service';
     AdminModule.register({
       path: '/example-admin',
       siteName: 'Example Admin',
+      authenticate: async (id, password) => {
+        if (id === 'test' && password === 'password') {
+          return { name: 'admin' };
+        }
+        throw new UnauthorizedException();
+      },
     }),
   ],
   controllers: [AppController],
