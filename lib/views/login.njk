@@ -1,0 +1,29 @@
+{% extends 'base.njk' %}
+
+{% block main %}
+  <main class="relative z-10 flex-auto flex items-center justify-center text-sm text-center text-gray-600 py-16 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-sm">
+      <h1 class="text-3xl font-bold mb-4">{{ siteName }}</h1>
+      <form method="POST" action="{{ rootPath + '/login' }}">
+        <input
+          name="username"
+          class="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-sm mb-4 focus:border-teal-500 focus:ring-teal-500 focus:outline-none"
+          placeholder="ID"
+          required
+        />
+        <input
+          type="password"
+          class="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-sm mb-4 focus:border-teal-500 focus:ring-teal-500 focus:outline-none"
+          placeholder="Password"
+          required
+        />
+        <button
+          type="submit"
+          class="block w-full py-2 px-3 border border-transparent rounded-md text-white font-medium bg-gray-700 shadow-sm sm:text-sm mb-10 hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50"
+        >
+          Log in
+        </button>
+      </form>
+    </div>
+  </main>
+{% endblock %}
