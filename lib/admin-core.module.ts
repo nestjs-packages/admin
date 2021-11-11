@@ -21,11 +21,11 @@ import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 @Module({})
 export class AdminCoreModule implements NestModule {
   static register(options: AdminModuleOptions = {}): DynamicModule {
-    const adminModuleOptions = {
+    const optionsProvider = {
       provide: ADMIN_MODULE_OPTIONS,
       useValue: options,
     };
-    const providers = [adminModuleOptions, AdminEnvironment];
+    const providers = [optionsProvider, AdminEnvironment];
 
     return {
       global: true,
@@ -88,14 +88,19 @@ export class AdminCoreModule implements NestModule {
     if (options.useFactory) {
       return {
         provide: ADMIN_MODULE_OPTIONS,
-        useFactory: options.useFactory,
+        useFactory: async (...args) => ({
+          ...(await options.useFactory(...args)),
+          path: options.path,
+        }),
         inject: options.inject || [],
       };
     }
     return {
       provide: ADMIN_MODULE_OPTIONS,
-      useFactory: async (optionsFactory: AdminOptionsFactory) =>
-        await optionsFactory.createAdminOptions(),
+      useFactory: async (optionsFactory: AdminOptionsFactory) => ({
+        ...(await optionsFactory.createAdminOptions()),
+        path: options.path,
+      }),
       inject: [options.useExisting || options.useClass],
     };
   }
