@@ -1,5 +1,6 @@
-import { DynamicModule, Module, Type } from '@nestjs/common';
-import { RouterModule } from '@nestjs/core';
+import { DynamicModule, Module, NestModule, Type } from '@nestjs/common';
+import { HttpAdapterHost, RouterModule } from '@nestjs/core';
+import { join } from 'path';
 
 import { AdminModuleOptions } from './common';
 import { AppModule, AuthModule, EntitiesModule } from './modules';
@@ -8,7 +9,7 @@ import { AdminEnvironment } from './admin-environment';
 import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 
 @Module({})
-export class AdminCoreModule {
+export class AdminCoreModule implements NestModule {
   static register(options: AdminModuleOptions = {}): DynamicModule {
     const adminModuleOptions = {
       provide: ADMIN_MODULE_OPTIONS,
@@ -40,5 +41,11 @@ export class AdminCoreModule {
         },
       ]),
     ];
+  }
+
+  constructor(private readonly adapterHost: HttpAdapterHost) {}
+
+  configure() {
+    this.adapterHost.httpAdapter.useStaticAssets(join(__dirname, 'public'));
   }
 }

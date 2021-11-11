@@ -8,3 +8,4 @@ if (!fs.existsSync(DIR)) {
 }
 
 fse.copySync('../lib/public', './dist/lib/public', { overwrite: true });
+fse.copySync('../lib/views', './dist/lib/views', { overwrite: true });

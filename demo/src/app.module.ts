@@ -8,7 +8,8 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     AdminModule.register({
-      path: '/ceos',
+      path: '/example-admin',
+      siteName: 'Example Admin',
     }),
   ],
   controllers: [AppController],

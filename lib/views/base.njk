@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- NestJS Admin CSS -->
+    <link rel="stylesheet" href="/css/tailwind.css" />
+
+    {% block stylesheets %}
+
+    {% endblock %}
+
+    <title>
+      {{ siteName }}
+    </title>
+  </head>
+  <body class="{{ pageId }}">
+    {% include 'blocks/header.njk' %}
+
+    {% if backLink %}
+      <nav class="navbar admin-subheader">
+        <a href="{{ backLink }}">
+          <button type="button" class="btn btn-outline-secondary btn-sm">
+            &lsaquo; Back
+          </button>
+        </a>
+      </nav>
+    {% endif %}
+
+    {% for item in messages %}
+      <div class="alert alert-success">
+        {{ item }}
+      </div>
+    {% endfor %}
+
+    {% block body %}
+
+    {% endblock %}
+  </body>
+</html>

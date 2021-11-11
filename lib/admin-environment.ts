@@ -1,7 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import * as nunjucks from 'nunjucks';
 import { join } from 'path';
+
+import { AdminModuleOptions } from './common';
+import { ADMIN_MODULE_OPTIONS } from './admin.constants';
 
 interface TemplateParameters {
   request: Request;
@@ -12,10 +15,16 @@ interface TemplateParameters {
 export class AdminEnvironment {
   private env: nunjucks.Environment;
 
-  constructor() {
-    this.env = nunjucks.configure(join(__dirname, 'public', 'views'), {
+  constructor(
+    @Inject(ADMIN_MODULE_OPTIONS)
+    private options: AdminModuleOptions,
+  ) {
+    this.env = nunjucks.configure(join(__dirname, 'views'), {
       noCache: true,
     });
+
+    this.env.addGlobal('rootPath', this.options.path ?? '/admin');
+    this.env.addGlobal('siteName', this.options.siteName ?? 'Nest.js Admin');
   }
 
   async render(name: string, parameters: TemplateParameters) {
