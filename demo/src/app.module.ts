@@ -6,7 +6,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [AdminModule.register()],
+  imports: [
+    AdminModule.register({
+      path: '/ceos',
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

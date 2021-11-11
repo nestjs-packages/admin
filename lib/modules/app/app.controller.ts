@@ -3,7 +3,7 @@ import { Request } from 'express';
 
 import { AdminEnvironment } from '../../admin-environment';
 
-@Controller('/admin')
+@Controller()
 export class AppController {
   constructor(private env: AdminEnvironment) {}
 

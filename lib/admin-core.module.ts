@@ -1,10 +1,7 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { DynamicModule, Module, Type } from '@nestjs/common';
+import { RouterModule } from '@nestjs/core';
 
-import {
-  AdminModuleAsyncOptions,
-  AdminModuleOptions,
-  AdminOptionsFactory,
-} from './common';
+import { AdminModuleOptions } from './common';
 import { AppModule, AuthModule, EntitiesModule } from './modules';
 
 import { AdminEnvironment } from './admin-environment';
@@ -22,58 +19,26 @@ export class AdminCoreModule {
     return {
       global: true,
       module: AdminCoreModule,
-      imports: [AppModule, AuthModule, EntitiesModule],
+      imports: this.createModuleImports(options.path),
       providers,
       exports: providers,
     };
   }
 
-  static registerAsync(options: AdminModuleAsyncOptions = {}): DynamicModule {
-    const providers = [...this.createAsyncProviders(options), AdminEnvironment];
+  private static createModuleImports(
+    path = '/admin',
+  ): (DynamicModule | Type<unknown>)[] {
+    const modules = [AppModule, AuthModule, EntitiesModule];
 
-    return {
-      global: true,
-      module: AdminCoreModule,
-      imports: (options.imports || []).concat([
-        AppModule,
-        AuthModule,
-        EntitiesModule,
-      ]),
-      providers,
-      exports: providers,
-    };
-  }
-
-  private static createAsyncProviders(
-    options: AdminModuleAsyncOptions,
-  ): Provider[] {
-    if (options.useExisting || options.useFactory) {
-      return [this.createAsyncOptionsProvider(options)];
-    }
     return [
-      this.createAsyncOptionsProvider(options),
-      {
-        provide: options.useClass,
-        useClass: options.useClass,
-      },
+      ...modules,
+      RouterModule.register([
+        {
+          path,
+          module: AdminCoreModule,
+          children: modules,
+        },
+      ]),
     ];
-  }
-
-  private static createAsyncOptionsProvider(
-    options: AdminModuleAsyncOptions,
-  ): Provider {
-    if (options.useFactory) {
-      return {
-        provide: ADMIN_MODULE_OPTIONS,
-        useFactory: options.useFactory,
-        inject: options.inject || [],
-      };
-    }
-    return {
-      provide: ADMIN_MODULE_OPTIONS,
-      useFactory: async (optionsFactory: AdminOptionsFactory) =>
-        await optionsFactory.createAdminOptions(),
-      inject: [options.useExisting || options.useClass],
-    };
   }
 }
