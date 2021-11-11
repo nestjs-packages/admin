@@ -10,17 +10,18 @@
       2,
       "always",
       [
-        "build",
-        "chore",
-        "ci",
-        "docs",
         "feat",
+        "enhance",
         "fix",
         "perf",
         "refactor",
-        "revert",
         "style",
         "test",
+        "docs",
+        "build",
+        "ci",
+        "chore",
+        "revert",
         "sample"
       ]
     ]
