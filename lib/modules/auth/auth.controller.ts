@@ -9,20 +9,19 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
 
 import { AdminModuleOptions } from '../../common';
 import { AdminEnvironment } from '../../admin-environment';
 import { ADMIN_MODULE_OPTIONS } from '../../admin.constants';
 
 import { LoginDto } from './dtos';
-import { JwtService } from './jwt.service';
 
 @Controller()
 export class AuthController {
   constructor(
     @Inject(ADMIN_MODULE_OPTIONS) private readonly options: AdminModuleOptions,
     private readonly env: AdminEnvironment,
-    private readonly jwtService: JwtService,
   ) {}
 
   @Get('/login')
@@ -46,14 +45,17 @@ export class AuthController {
         throw new UnauthorizedException();
       }
 
-      const token = await this.jwtService.sign({ id, ...result });
+      const token = await jwt.sign(
+        { id, ...result },
+        this.options.jwtSecretKey,
+        { expiresIn: '1d' },
+      );
       res.cookie('token', token, {
         expires: new Date(Date.now() + 900000),
         httpOnly: true,
       });
       res.redirect(this.options.path);
     } catch (err) {
-      console.log(err);
       res.redirect(this.options.path + '/login');
     }
   }
@@ -64,6 +66,7 @@ export class AuthController {
       return res.redirect(this.options.path);
     }
 
+    res.clearCookie('token');
     res.redirect(this.options.path + '/login');
   }
 }
