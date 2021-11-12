@@ -1,9 +1,12 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 
 import { AdminEnvironment } from '../../admin-environment';
 
+import { JwtAuthGuard } from '../auth';
+
 @Controller()
+@UseGuards(JwtAuthGuard)
 export class AppController {
   constructor(private env: AdminEnvironment) {}
 
