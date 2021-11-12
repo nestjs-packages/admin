@@ -46,7 +46,7 @@ export class AuthController {
         throw new UnauthorizedException();
       }
 
-      const token = await this.jwtService.sign({ id, password, ...result });
+      const token = await this.jwtService.sign({ id, ...result });
       res.cookie('token', token, {
         expires: new Date(Date.now() + 900000),
         httpOnly: true,
