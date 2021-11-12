@@ -4,9 +4,14 @@
       {{ siteName }}
     </a>
     {% if request.user %}
-      <form action="{{ rootPath + '/logout' }}" method="POST">
-        <button type="submit" class="admin-header__logout">Logout</button>
-      </form>
+      <div class="flex flex-row">
+        {% if request.user.name %}
+          <p class="text-white font-bold mr-8">Hello, {{ request.user.name }}</p>
+        {% endif %}
+        <form action="{{ rootPath + '/logout' }}" method="POST">
+          <button type="submit" class="text-white">Logout</button>
+        </form>
+      </div>
     {% endif %}
   </nav>
 </header>
