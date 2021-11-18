@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AdminModule } from '@nestjs-packages/admin';
 
+import { UserModule } from './user/user.module';
+import { UserEntity } from './user/user.entity';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -25,9 +28,10 @@ import { AppService } from './app.service';
       username: 'root',
       password: 'root',
       database: 'root',
-      entities: [],
+      entities: [UserEntity],
       synchronize: true,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
