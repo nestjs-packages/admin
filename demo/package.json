@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "set": "docker compose -f docker-compose.yml up",
+    "set:down": "docker-compose -f docker-compose.yml down --volumes && docker system prune",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

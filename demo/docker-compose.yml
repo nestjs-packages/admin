@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  mysql:
+    container_name: demo-mysql
+    image: mysql:5.7
+    command:
+      [
+        'mysqld',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+      ]
+    networks:
+      - demo-webnet
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: ok
+    ports:
+      - '3306:3306'
+    volumes:
+      - demo-mysql-data:/var/lib/demo/mysql
+networks:
+  demo-webnet:
+volumes:
+  demo-mysql-data:
