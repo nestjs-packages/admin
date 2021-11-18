@@ -1,4 +1,5 @@
 import { Module, UnauthorizedException } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AdminModule } from '@nestjs-packages/admin';
 
@@ -16,6 +17,16 @@ import { AppService } from './app.service';
         }
         throw new UnauthorizedException();
       },
+    }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'root',
+      entities: [],
+      synchronize: true,
     }),
   ],
   controllers: [AppController],
