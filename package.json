@@ -16,6 +16,7 @@
     "publish:npm": "npm publish --access public",
     "test:e2e": "jest --config ./tests/jest-e2e.json --runInBand",
     "test:e2e:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch",
+    "check": "run-p lint test:e2e",
     "release": "release-it"
   },
   "bugs": {
@@ -48,6 +49,7 @@
     "eslint-plugin-import": "2.25.3",
     "husky": "7.0.4",
     "jest": "27.3.1",
+    "npm-run-all": "4.1.5",
     "prettier": "2.5.0",
     "reflect-metadata": "0.1.13",
     "release-it": "14.11.8",
