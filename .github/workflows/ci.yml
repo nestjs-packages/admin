@@ -34,5 +34,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: E2E test
-        run: npm run test:e2e
+      - name: Run all checks
+        run: npm run check
