@@ -2,6 +2,7 @@ import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 
 import { AdminEnvironment } from '../../admin-environment';
+import { getAdminSections } from '../../common/helpers';
 
 import { JwtAuthGuard } from '../auth';
 
@@ -12,6 +13,8 @@ export class AppController {
 
   @Get('/')
   async helloWorld(@Req() request: Request) {
-    return await this.env.render('index.njk', { request });
+    const sections = getAdminSections();
+
+    return await this.env.render('index.njk', { sections, request });
   }
 }

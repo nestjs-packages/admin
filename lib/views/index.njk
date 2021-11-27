@@ -3,6 +3,17 @@
 
 {% block main %}
   <main>
-    <h1>Hello NestJS Admin!</h1>
+    {% for section in sections %}
+      <section>
+        <h3>
+          {{ section.name }}
+        </h3>
+        {% for admin in section.admins %}
+          <a href="{{ rootPath + '/' + admin.path }}">
+            {{ admin.name }}
+          </a>
+        {% endfor %}
+      </section>
+    {% endfor %}
   </main>
 {% endblock %}
