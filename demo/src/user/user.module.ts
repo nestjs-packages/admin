@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
 
-@Module({})
+import { UserAdmin } from './user.admin';
+
+@Module({
+  providers: [UserAdmin],
+})
 export class UserModule {}
